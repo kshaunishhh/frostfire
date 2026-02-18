@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frostfire</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1 id="title">FROSTFIRE</h1>
+  <h2 id="turn"></h2>
+  <h3 id="scoreBoard"></h3>
+
+
+  <!-- MAIN MENU -->
+  <div id="menu">
+    <button class="menu-btn" id="offlineBtn">PLAY OFFLINE</button>
+    <button class="menu-btn" id="onlineBtn">PLAY ONLINE</button>
+
+    <div id="roleSelect" class="hidden">
+      <h3>Choose Your Element</h3>
+      <button class="menu-btn" id="chooseFire">Choose Fire 🔥</button>
+      <button class="menu-btn" id="chooseIce">Choose Ice ❄</button>
+    </div>
+  </div>
+
+
+  <!-- GAME CANVAS -->
+  <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+  <!-- WIN MODAL -->
+  <div id="winModal" class="hidden">
+    <div class="modal-content">
+      <h2 id="winnerText"></h2>
+      <div class="modal-buttons">
+        <button class="menu-btn" id="playAgainBtn">Play Again</button>
+        <button class="menu-btn" id="mainMenuBtn">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
