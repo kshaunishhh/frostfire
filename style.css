@@ -83,3 +83,22 @@ h1 {
 .hidden {
   display: none !important;
 }
+
+#loadingScreen {
+  position: fixed;
+  inset: 0;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  z-index: 999;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

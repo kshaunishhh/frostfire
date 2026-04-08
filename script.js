@@ -1,5 +1,10 @@
-const socket = io();
-
+fetch("/")
+  .then(() => console.log("Server warm"))
+  .catch(() => {});
+  const socket = io({
+  reconnection: true,
+  reconnectionAttempts: 5,
+});
 const roleSelect = document.getElementById("roleSelect");
 const chooseFire = document.getElementById("chooseFire");
 const chooseIce = document.getElementById("chooseIce");
@@ -400,3 +405,20 @@ function loop() {
 
 initGrid();
 loop();
+
+async function waitForServer() {
+  let ready = false;
+
+  while (!ready) {
+    try {
+      await fetch("/");
+      ready = true;
+    } catch {
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
+
+  document.getElementById("loadingScreen").style.display = "none";
+}
+
+waitForServer();
