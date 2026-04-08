@@ -221,16 +221,21 @@ function updateBalls() {
     const targetY = b.targetRow * CELL + CELL / 2;
 
     if (Math.abs(b.x - targetX) < 5 && Math.abs(b.y - targetY) < 5) {
-      if (
-        b.targetRow >= 0 &&
-        b.targetRow < SIZE &&
-        b.targetCol >= 0 &&
-        b.targetCol < SIZE
-      ) {
-        addEnergy(b.targetRow, b.targetCol, b.player);
-      }
-      movingBalls.splice(i, 1);
+
+  // 🚨 STOP energy transfer if game ended
+  if (!gameOver) {
+    if (
+      b.targetRow >= 0 &&
+      b.targetRow < SIZE &&
+      b.targetCol >= 0 &&
+      b.targetCol < SIZE
+    ) {
+      addEnergy(b.targetRow, b.targetCol, b.player);
     }
+  }
+
+  movingBalls.splice(i, 1);
+}
   }
 
   if (movingBalls.length === 0 && !gameOver && movesPlayed > 1) {
@@ -257,6 +262,7 @@ function checkWin() {
 
 function endGame(text) {
   gameOver = true;
+  movingBalls.length = 0;
 
   winnerText.textContent = text;
   winnerText.style.color =
@@ -379,10 +385,16 @@ function drawMovingBalls() {
 
 function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   drawGrid();
   drawStaticBalls();
-  updateBalls();
+
+  if (!gameOver) {
+    updateBalls();
+  }
+
   drawMovingBalls();
+
   requestAnimationFrame(loop);
 }
 
