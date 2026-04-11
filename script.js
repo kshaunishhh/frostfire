@@ -9,6 +9,10 @@ const loginScreen = document.getElementById("loginScreen");
 const menuScreen = document.getElementById("menuScreen");
 const gameScreen = document.getElementById("gameScreen");
 
+console.log("Login:", loginScreen);
+console.log("Menu:", menuScreen);
+console.log("Game:", gameScreen);
+
 function showScreen(screen) {
   loginScreen.classList.add("hidden");
   menuScreen.classList.add("hidden");
