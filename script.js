@@ -1,3 +1,18 @@
+fetch("/auth/me")
+  .then(res => {
+    if (!res.ok) throw new Error();
+    return res.json();
+  })
+  .then(data => {
+    user = data.user;
+
+    document.getElementById("googleBtn").style.display = "none";
+    document.getElementById("guestBtn").textContent = "Continue";
+
+  })
+  .catch(() => {
+    console.log("Not logged in");
+  });
 fetch("/")
   .then(() => console.log("Server warm"))
   .catch(() => {});

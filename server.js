@@ -35,6 +35,14 @@ passport.deserializeUser((obj, done) => done(null, obj));
 
 app.use(express.static(__dirname));
 
+app.get("/auth/me", (req, res) => {
+  if (req.user) {
+    res.json({ user: req.user });
+  } else {
+    res.status(401).json({ user: null });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("Server is alive 🚀");
 });
