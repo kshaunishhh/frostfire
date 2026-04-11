@@ -17,9 +17,20 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log(err));
 
 
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+const sessionMiddleware = session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+});
+
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
+const sharedSession = require("express-socket.io-session");
+
+io.use(sharedSession(sessionMiddleware, {
+  autoSave: true
+}));
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -27,7 +38,18 @@ passport.use(new GoogleStrategy({
   callbackURL: "https://frostfire.onrender.com/auth/google/callback"
 },
 (accessToken, refreshToken, profile, done) => {
-  return done(null, profile);
+  User.findOne({ googleId: profile.id }).then(existingUser => {
+    if (existingUser) return done(null, existingUser);
+
+    const newUser = new User({
+      googleId: profile.id,
+      name: profile.displayName,
+      totalWins: 0,
+      matches: []
+    });
+
+    newUser.save().then(user => done(null, user));
+  });
 }));
 
 passport.serializeUser((user, done) => done(null, user));
@@ -88,6 +110,23 @@ function explodeCell(room, row, col, player) {
       cell.owner = player;
     }
   });
+}
+
+function checkWinner(room) {
+  let fire = 0;
+  let ice = 0;
+
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      if (room.grid[r][c].owner === "fire") fire++;
+      if (room.grid[r][c].owner === "ice") ice++;
+    }
+  }
+
+  if (fire > 0 && ice === 0) return "fire";
+  if (ice > 0 && fire === 0) return "ice";
+
+  return null;
 }
 
 // ===== CONNECTION =====
@@ -180,7 +219,7 @@ socket.on("move", ({ row, col, player }) => {
 
   // ✅ update
   cell.owner = player;
-  cell.count++;
+  cell.count = (cell.count || 0) + 1;
 
   const criticalMass =
   4 -
@@ -201,6 +240,11 @@ if (cell.count >= criticalMass) {
     nextTurn: room.currentTurn,
     grid: room.grid
   });
+  const winner = checkWinner(room);
+
+if (winner) {
+  io.to(roomId).emit("gameOver", winner);
+}
 });
 
   // ===== WIN TRACKING =====
@@ -248,11 +292,18 @@ if (room) room.currentTurn = "fire";
 
   // ===== RESET GAME =====
   socket.on("resetGame", () => {
-    const room = rooms[roomId];
-if (room) room.currentTurn = "fire";
-    io.to(roomId).emit("resetGame");
-  });
+  const room = rooms[roomId];
+  if (!room) return;
 
+  room.currentTurn = "fire";
+
+  // 🔥 ADD THIS (IMPORTANT)
+  room.grid = Array(6).fill().map(() =>
+    Array(6).fill().map(() => ({ count: 0, owner: null }))
+  );
+
+  io.to(roomId).emit("resetGame");
+});
   // ===== DISCONNECT =====
   socket.on("disconnect", () => {
     const room = rooms[roomId];
