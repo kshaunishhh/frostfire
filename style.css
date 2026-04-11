@@ -25,10 +25,18 @@ body {
 }
 
 /* ===== TITLE ===== */
-h1 {
+#title {
   font-size: 42px;
   letter-spacing: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+
+  background: linear-gradient(90deg, #ff4500, #00cfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 20px rgba(255, 69, 0, 0.6),
+    0 0 30px rgba(0, 207, 255, 0.4);
 }
 
 #turn {
@@ -46,6 +54,7 @@ h1 {
 
   padding: 30px;
   border-radius: 20px;
+  align-items: center;
 
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
@@ -186,3 +195,70 @@ h1 {
   box-shadow: 0 0 25px #00cfff;
 }
 
+/* ===== AUTH MENU (LOGIN BOX) ===== */
+#authMenu {
+  margin-top: 10px;
+
+  padding: 20px;
+  border-radius: 15px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow:
+    0 0 20px rgba(0,0,0,0.5),
+    inset 0 0 10px rgba(255,255,255,0.05);
+}
+/* ===== AUTH BUTTON BASE ===== */
+#authMenu button {
+  width: 220px;
+  padding: 12px;
+  margin: 6px;
+
+  border-radius: 12px;
+  border: none;
+
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+/* ===== GUEST BUTTON ===== */
+#guestBtn {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  color: white;
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.1),
+    inset 0 0 5px rgba(255,255,255,0.05);
+}
+
+#guestBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+/* ===== GOOGLE BUTTON ===== */
+#googleBtn {
+  background: linear-gradient(145deg, #ff4500, #ff2d00);
+  color: white;
+
+  box-shadow:
+    0 0 12px rgba(255, 69, 0, 0.6),
+    0 0 25px rgba(255, 69, 0, 0.4);
+}
+
+#googleBtn:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 25px rgba(255, 69, 0, 1),
+    0 0 50px rgba(255, 69, 0, 0.5);
+}
