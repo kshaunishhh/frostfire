@@ -158,10 +158,10 @@ body {
   margin-bottom: 20px;
 }
 
-.hidden {
+/* .hidden {
   
-  display: none ;
-}
+  display: none !important;
+} */
 
 #loadingScreen {
   position: fixed;
@@ -265,4 +265,9 @@ body {
 #googleBtn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.hidden {
+  
+  display: none !important;
 }
