@@ -248,17 +248,17 @@ body {
 
 /* ===== GOOGLE BUTTON ===== */
 #googleBtn {
-  background: linear-gradient(145deg, #ff4500, #ff2d00);
+  background: linear-gradient(145deg, #1e293b, #0f172a);
   color: white;
 
+  border: 1px solid rgba(255,255,255,0.1);
+
   box-shadow:
-    0 0 12px rgba(255, 69, 0, 0.6),
-    0 0 25px rgba(255, 69, 0, 0.4);
+    0 0 10px rgba(255,255,255,0.1),
+    inset 0 0 5px rgba(255,255,255,0.05);
 }
 
 #googleBtn:hover {
   transform: scale(1.05);
-  box-shadow:
-    0 0 25px rgba(255, 69, 0, 1),
-    0 0 50px rgba(255, 69, 0, 0.5);
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
 }
