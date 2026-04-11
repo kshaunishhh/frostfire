@@ -1,3 +1,7 @@
+window.onload = () => {
+  showScreen(loginScreen);
+};
+
 const guestBtn = document.getElementById("guestBtn");
 const googleBtn = document.getElementById("googleBtn");
 
@@ -28,7 +32,8 @@ fetch("/auth/me")
     // document.getElementById("guestBtn").onclick = startGame;
 
   .catch(() => {
-    console.log("Not logged in");
+    // console.log("Not logged in");
+    showScreen(loginScreen);
   });
 fetch("/")
   .then(() => console.log("Server warm"))
