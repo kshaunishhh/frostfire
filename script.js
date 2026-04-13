@@ -1,4 +1,3 @@
-
 fetch("/auth/me")
   .then(res => {
     if (!res.ok) throw new Error();
@@ -500,4 +499,4 @@ async function waitForServer() {
   document.getElementById("loadingScreen").style.display = "none";
 }
 
-waitForServer()
+waitForServer();
