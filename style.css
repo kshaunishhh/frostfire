@@ -185,3 +185,16 @@ h1 {
 #chooseIce:hover {
   box-shadow: 0 0 25px #00cfff;
 }
+.end-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .end-buttons button {
+    width: 90%;
+  }
+}
+/* donee */
