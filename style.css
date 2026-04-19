@@ -63,6 +63,7 @@ h1 {
   cursor: pointer;
   color: white;
   letter-spacing: 1px;
+  white-space: nowrap;
 
   background: linear-gradient(145deg, #ff4500, #ff2d00);
   box-shadow:
